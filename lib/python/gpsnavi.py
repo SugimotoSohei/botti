@@ -5,6 +5,7 @@ import math
 import pynmea2
 from pyproj import Geod
 import logging
+import logging
 
 
 class gpsparser(object):
@@ -17,15 +18,29 @@ class gpsparser(object):
             logging.info("open SerialPort")
 
     def gpsupdate(self, debuggpsvalue=None):
+        readline = ""
         if debuggpsvalue is None:
-            readline = str(self.ser.readline(), 'utf-8').split('\r')[0]
-            self.gpsdata = self.NMEAanAlysis(readline)
+            while True:
+                self.ser.flushInput()
+                self.ser.flushOutput()
+                readline = str(self.ser.readline(), 'utf-8').split('\r')[0]
+                self.ser.flushInput()
+                self.ser.flushOutput()
+                self.gpsdata = self.NMEAanAlysis(readline)
+                if self.gpsdata is not None:
+                    break
         else:
-            self.gpsdata = self.NMEAanAlysis(debuggpsvalue)
+            readline = debuggpsvalue
+            self.gpsdata = self.NMEAanAlysis(readline)
+        logging.info(readline)
         logging.info("gpsupdate")
 
     def NMEAanAlysis(self, data):
-        return pynmea2.parse(data)
+        try:
+            parsedata = pynmea2.parse(data)
+            return parsedata
+        except:
+            return None
 
     def timestamp(self):
         return self.gpsdata.timestamp

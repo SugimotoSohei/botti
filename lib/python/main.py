@@ -5,6 +5,7 @@ import time
 import gpsnavi
 import logging
 import datetime
+import flagjudge
 
 
 class Main(object):
@@ -83,7 +84,12 @@ class Main(object):
             self.gogpio.turn(gapazimath)
 
     def arrive(self):
-        pass
+        for i in range(0, 360, 5):
+            cap = flagjudge.flagcapture()
+            cap.capture()
+            direction, count = cap.judge(selectcolor='red')
+            logging.info(str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
+            self.gogpio.left(5)
 
     def startjudge(self):
         while True:
@@ -107,5 +113,5 @@ class Main(object):
         logging.info('Finished')
 
 if __name__ == '__main__':
-    main = Main(gpsport='/dev/ttyAMA0')
+    main = Main(gpsport='/dev/ttyAMA0', goal=[[141.24966333333333, 43.13460166666667]], ratio=96.0, rate=0.0164)
     main.run()
