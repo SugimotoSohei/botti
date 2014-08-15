@@ -64,10 +64,10 @@ class GPIO:  # GPIOをTurtleに
     def left(self, azimath):
         start = time.time()
         while True:
-            IO.output(self.leftmotor[0], IO.HIGH)
-            IO.output(self.leftmotor[1], IO.LOW)
-            IO.output(self.rightmotor[0], IO.LOW)
-            IO.output(self.rightmotor[1], IO.HIGH)
+            IO.output(self.leftmotor[0], IO.LOW)
+            IO.output(self.leftmotor[1], IO.HIGH)
+            IO.output(self.rightmotor[0], IO.HIGH)
+            IO.output(self.rightmotor[1], IO.LOW)
             if time.time() - start >= math.fabs(azimath)/self.ratio:
                 break
         time.sleep(0.01)
@@ -76,10 +76,10 @@ class GPIO:  # GPIOをTurtleに
     def right(self, azimath):
         start = time.time()
         while True:
-            IO.output(self.leftmotor[0], IO.LOW)
-            IO.output(self.leftmotor[1], IO.HIGH)
-            IO.output(self.rightmotor[0], IO.HIGH)
-            IO.output(self.rightmotor[1], IO.LOW)
+            IO.output(self.leftmotor[0], IO.HIGH)
+            IO.output(self.leftmotor[1], IO.LOW)
+            IO.output(self.rightmotor[0], IO.LOW)
+            IO.output(self.rightmotor[1], IO.HIGH)
             if time.time() - start >= math.fabs(azimath)/self.ratio:
                 break
         time.sleep(0.01)
