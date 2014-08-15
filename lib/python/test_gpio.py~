@@ -1,21 +1,24 @@
 #!coding:utf-8
 
-import RPi.GPIO as IO
+import os
+import sys
 import time
+import unittest
+if os.getlogin() == 'pi':
+    import RPi.GPIO as IO
+else:
+    sys.path.append(os.path.dirname(__file__))
+    from RpiTest import GPIO as IO
 
-<<<<<<< HEAD
-IO.setmode(IO.BCM)
-IO.setup(18,IO.OUT)
 
-IO.output(18,IO.HIGH)
-time.sleep(1)
-IO.output(18,IO.LOW)
-=======
-io.setmode(io.RMC)
-io.setup(18, io.OUT)
+class gpiotest(unittest.TestCase):
+    def testIO(self):
+        IO.setmode(IO.BCM)
+        IO.setup(18, IO.OUT)
+        IO.output(18, IO.HIGH)
+        time.sleep(1)
+        IO.output(18, IO.LOW)
+        time.sleep(1)
 
-io.output(18, io.HIGH)
-time.sleep(1)
-io.output(18, io.LOW)
->>>>>>> 4df2841c9cb011cb7b70af8eb55efdc2a48b1589
-time.sleep(1)
+if __name__ == '__main__':
+    unittest.main()

@@ -12,7 +12,7 @@ class flagcapture(object):
         self.imagename = None
         try:
             self.imagename = str(time.strftime('%H-%M-%S', datetime.datetime.now().timetuple()))+".png"
-            subprocess.call("raspistill -o " + self.imagename + " -t 0")
+            subprocess.call("raspistill -o " + self.imagename + " -t 1", shell=True)
             logging.info("capture:"+str(self.imagename))
             return True
         except:
