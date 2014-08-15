@@ -1,4 +1,5 @@
-#!coding:utf-8
+#!/usr/bin/python3
+# coding: utf-8
 
 import go_GPIO
 import time
@@ -41,7 +42,7 @@ class Main(object):
             if count >= 3:
                 break
             print(self.gps.altitude())
-            if self.gps.altitude() >= self.groundalt + self.maxalt:
+            if self.gps.altitude() >= self.maxalt:
                 count += 1
         count = 0
         while True:
@@ -51,8 +52,7 @@ class Main(object):
                 self.gps.gpsupdate(debuggpsvalue=self._gpsdebugvalue.pop(0))
             if count >= 10:
                 break
-            print(self.gps.altitude())
-            if self.groundalt - 10 <= self.gps.altitude() <= self.groundalt + 30:
+            if self.gps.altitude() <= self.groundalt + 20:
                 count += 1
         time.sleep(30)
         self.gogpio.forward(20)
@@ -76,8 +76,6 @@ class Main(object):
                 gpsval = self._gpsdebugvalue.pop(0)
                 self.gps.gpsupdate(debuggpsvalue=gpsval)
             self.gps.goalcalc()
-            print(self.gps.goalazimath())
-            print(fazimath)
             gapazimath = self.gps.goalazimath() - fazimath
             if self.gogpio.first(goaldistance1, self.gps.goaldistance()):
                 self.gogpio.back(10)
@@ -88,7 +86,10 @@ class Main(object):
             cap = flagjudge.flagcapture()
             cap.capture()
             direction, count = cap.judge(selectcolor='red')
-            logging.info(str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
+            if int(count) >= 300:
+                logging.info("Found:"+str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
+            else:
+                logging.info("NotFound:"+str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
             self.gogpio.left(5)
 
     def startjudge(self):
@@ -113,5 +114,6 @@ class Main(object):
         logging.info('Finished')
 
 if __name__ == '__main__':
-    main = Main(gpsport='/dev/ttyAMA0', goal=[[141.24966333333333, 43.13460166666667]], ratio=96.0, rate=0.0164)
+    print("main.pyExecute")
+    main = Main(gpsport='/dev/ttyAMA0', goal=[[141.24966333333333, 43.13460166666667]], groundalt=36.7, maxalt=100.0, ratio=96.0, rate=0.0164)
     main.run()

@@ -5,7 +5,6 @@ import math
 import pynmea2
 from pyproj import Geod
 import logging
-import logging
 
 
 class gpsparser(object):
@@ -23,14 +22,18 @@ class gpsparser(object):
             while True:
                 self.ser.flushInput()
                 self.ser.flushOutput()
-                readline = str(self.ser.readline(), 'utf-8').split('\r')[0]
-                self.ser.flushInput()
-                self.ser.flushOutput()
-                self.gpsdata = self.NMEAanAlysis(readline)
+                try:
+                    readline = str(self.ser.readline(), 'utf-8').split('\r')[0]
+                    self.ser.flushInput()
+                    self.ser.flushOutput()
+                    self.gpsdata = self.NMEAanAlysis(readline)
+                except:
+                    pass
                 if self.gpsdata is not None:
                     break
         else:
             readline = debuggpsvalue
+            print(readline)
             self.gpsdata = self.NMEAanAlysis(readline)
         logging.info(readline)
         logging.info("gpsupdate")

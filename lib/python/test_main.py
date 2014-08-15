@@ -12,7 +12,7 @@ class test_main(unittest.TestCase):
 
         goal=[[141.24981666666667, 43.13435],[141.24963333333332, 43.13462666666667]]
         #goal = [[43.123776666666664,141.24374166666666]]
-        self.testmain = main.Main(goal=goal)
+        self.testmain = main.Main(goal=goal,groundalt=36.7)
         f = open(os.path.dirname(__file__)+'/test/gen_test_main.txt')
         gpgga = []
         for data in f.readlines():
