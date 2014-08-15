@@ -89,7 +89,10 @@ class Main(object):
             if int(count) >= 300:
                 logging.info("Found:"+str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
             else:
-                logging.info("NotFound:"+str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
+                if direction is None:
+                    logging.info("captureFail")
+                else:
+                    logging.info("NotFound:"+str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
             self.gogpio.left(5)
 
     def startjudge(self):

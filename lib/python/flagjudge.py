@@ -9,21 +9,26 @@ import logging
 class flagcapture(object):
 
     def capture(self):
+        self.imagename = None
         try:
             self.imagename = str(time.strftime('%H-%M-%S', datetime.datetime.now().timetuple()))+".png"
             subprocess.call("raspistill -o " + self.imagename + " -t 0")
             logging.info("capture:"+str(self.imagename))
             return True
         except:
+            self.imagename = None
             logging.info("capture:Failed")
             return False
 
     def judge(self, selectcolor='red', selectcolor_judge=110, othercolor1_judge=100, othercolor2_judge=100):
-        judgeimage = self.JudgeGoal(filename=self.imagename, selectcolor_judge=selectcolor_judge, othercolor1_judge=othercolor1_judge, othercolor2_judge=othercolor2_judge)
-        judgeimage.loadimage()
-        judgeimage.objectselect(colorname=selectcolor)
-        logging.info("judge")
-        return judgeimage.objectdirection()
+        if self.imagename is not None:
+            judgeimage = self.JudgeGoal(filename=self.imagename, selectcolor_judge=selectcolor_judge, othercolor1_judge=othercolor1_judge, othercolor2_judge=othercolor2_judge)
+            judgeimage.loadimage()
+            judgeimage.objectselect(colorname=selectcolor)
+            logging.info("judge")
+            return judgeimage.objectdirection()
+        else:
+            return [None, '0']
 
     class JudgeGoal():
 
