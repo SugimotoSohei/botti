@@ -1,6 +1,6 @@
 import go_GPIO
 
-go = go_GPIO()
+go = go_GPIO.GPIO()
 while True:
     print('left:0,right:1,forward:2,back:3,stop:4')
     i = int(input().split()[0])
