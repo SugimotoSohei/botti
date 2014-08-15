@@ -12,9 +12,14 @@ class flagcapture(object):
         self.imagename = None
         try:
             self.imagename = str(time.strftime('%H-%M-%S', datetime.datetime.now().timetuple()))+".png"
-            subprocess.call("raspistill -o " + self.imagename + " -t 1", shell=True)
-            logging.info("capture:"+str(self.imagename))
-            return True
+            error = subprocess.call("raspistill -o " + self.imagename + " -t 1", shell=True)
+            if error == 0:
+                logging.info("capture:"+str(self.imagename))
+                return True
+            else:
+                logging.info("capture:Failed")
+                self.imagename=None
+                return False
         except:
             self.imagename = None
             logging.info("capture:Failed")

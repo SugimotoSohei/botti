@@ -94,6 +94,7 @@ class Main(object):
                 else:
                     logging.info("NotFound:"+str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
             self.gogpio.left(5)
+            self.gogpio.stop()
 
     def startjudge(self):
         while True:
