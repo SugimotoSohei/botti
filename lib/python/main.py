@@ -77,22 +77,15 @@ class Main(object):
                 self.gps.gpsupdate(debuggpsvalue=gpsval)
             self.gps.goalcalc()
             gapazimath = self.gps.goalazimath() - fazimath
-            if self.gogpio.first(goaldistance1, self.gps.goaldistance()):
-                self.gogpio.back(10)
+           # if self.gogpio.first(goaldistance1, self.gps.goaldistance()):
+           #     self.gogpio.back(10)
             self.gogpio.turn(gapazimath)
 
     def arrive(self):
+        self.gogpio.stop()
         for i in range(0, 360, 5):
             cap = flagjudge.flagcapture()
             cap.capture()
-            direction, count = cap.judge(selectcolor='red')
-            if int(count) >= 300:
-                logging.info("Found:"+str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
-            else:
-                if direction is None:
-                    logging.info("captureFail")
-                else:
-                    logging.info("NotFound:"+str(cap.imagename)+":direction:"+str(direction)+"count:"+str(count))
             self.gogpio.left(5)
             self.gogpio.stop()
 
@@ -119,5 +112,5 @@ class Main(object):
 
 if __name__ == '__main__':
     print("main.pyExecute")
-    main = Main(gpsport='/dev/ttyAMA0', goal=[[141.24966333333333, 43.13460166666667]], groundalt=36.7, maxalt=100.0, ratio=96.0, rate=0.0164)
+    main = Main(gpsport='/dev/ttyAMA0', goal=[[139.9873791954023,40.14224106321837]], groundalt=36.7, maxalt=100.0, ratio=96.0, rate=0.0164)
     main.run()

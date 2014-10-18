@@ -46,6 +46,11 @@ while True:
         IO.output(p5, IO.LOW)
         IO.output(p4, IO.LOW)
         IO.output(p6, IO.HIGH)
+    elif i == 9:
+        IO.output(p3, IO.HIGH)
+        IO.output(p4, IO.HIGH)
+        IO.output(p5, IO.HIGH)
+        IO.output(p6, IO.HIGH)
     else:
         IO.output(p3, IO.LOW)
         IO.output(p4, IO.LOW)
