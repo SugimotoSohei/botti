@@ -112,5 +112,5 @@ class Main(object):
 
 if __name__ == '__main__':
     print("main.pyExecute")
-    main = Main(gpsport='/dev/ttyAMA0', goal=[[139.9873791954023,40.14224106321837]], groundalt=36.7, maxalt=100.0, ratio=96.0, rate=0.0164)
+    main = Main(gpsport='/dev/ttyAMA0', goal=[[141.243236667, 43.142116]], groundalt=19.0, maxalt=30.0, ratio=96.0, rate=0.0164)
     main.run()
